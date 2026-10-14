@@ -1,6 +1,7 @@
 data/raw
 data/processed
 *.db
+!data/ipl.db
 *.csv
 .venv/
 venv/

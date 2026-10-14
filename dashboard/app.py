@@ -9,20 +9,36 @@ import streamlit as st
 # Database Connection Configuration
 # Requirement: Relative path DB = '../data/ipl.db'
 # ==============================================================================
-DB = '../data/ipl.db'
-if not os.path.exists(DB):
-    if os.path.exists('data/ipl.db'):
-        DB = 'data/ipl.db'
-    elif os.path.exists('../2_IPL_Cricket/ipl.db'):
-        DB = '../2_IPL_Cricket/ipl.db'
-    elif os.path.exists('2_IPL_Cricket/ipl.db'):
-        DB = '2_IPL_Cricket/ipl.db'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(BASE_DIR)
+
+CANDIDATE_PATHS = [
+    os.path.join(PARENT_DIR, 'data', 'ipl.db'),
+    os.path.join(PARENT_DIR, '2_IPL_Cricket', 'ipl.db'),
+    os.path.join(BASE_DIR, 'data', 'ipl.db'),
+    '../data/ipl.db',
+    'data/ipl.db',
+    '../2_IPL_Cricket/ipl.db',
+    '2_IPL_Cricket/ipl.db',
+]
+
+DB = None
+for p in CANDIDATE_PATHS:
+    if os.path.exists(p):
+        DB = p
+        break
+
+if DB is None:
+    DB = '../data/ipl.db'
 
 
 def q(sql: str, params: tuple = ()) -> pd.DataFrame:
     """Helper function to execute SQL queries with parameters.
     Rule: All numbers come directly out of SQL via q(). Nothing is calculated in pandas.
     """
+    if not os.path.exists(DB):
+        st.error(f"⚠️ Database not found at '{DB}'. Please ensure 'data/ipl.db' is included in the repository.")
+        st.stop()
     with sqlite3.connect(DB) as conn:
         return pd.read_sql_query(sql, conn, params=params)
 
