@@ -1116,6 +1116,7 @@ if nav_selection == "📊 Bowlers Overview":
                 title="Economy Rate (RPO)",
                 title_font=dict(color="#000000", size=11),
                 range=[6, 10.5],
+                fixedrange=True,
                 dtick=1,
                 tickfont=dict(color="#000000", size=11),
                 gridcolor="#e2e8f0",
@@ -1124,6 +1125,7 @@ if nav_selection == "📊 Bowlers Overview":
                 title="Year",
                 title_font=dict(color="#000000", size=11),
                 range=[2008, 2026],
+                fixedrange=True,
                 tickmode="linear",
                 tick0=2008,
                 dtick=2,
@@ -1132,7 +1134,12 @@ if nav_selection == "📊 Bowlers Overview":
                 gridcolor="#e2e8f0",
             ),
         )
-        st.plotly_chart(fig_season_trend, use_container_width=True, theme=None)
+        st.plotly_chart(
+            fig_season_trend,
+            use_container_width=True,
+            theme=None,
+            config={"scrollZoom": False, "displayModeBar": False},
+        )
         st.markdown('</div>', unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
@@ -1573,6 +1580,7 @@ else:
         ),
         yaxis=dict(
             range=[4, 12],
+            fixedrange=True,
             dtick=2,
             title="Economy Rate (RPO)",
             title_font=dict(color="#000000", size=12),
@@ -1583,6 +1591,7 @@ else:
             title="Year",
             title_font=dict(color="#000000", size=12),
             range=[2008, 2026],
+            fixedrange=True,
             tickmode="linear",
             tick0=2008,
             dtick=2,
@@ -1591,7 +1600,12 @@ else:
             gridcolor="#e2e8f0",
         ),
     )
-    st.plotly_chart(fig_b_season, use_container_width=True, theme=None)
+    st.plotly_chart(
+        fig_b_season,
+        use_container_width=True,
+        theme=None,
+        config={"scrollZoom": False, "displayModeBar": False},
+    )
     st.markdown('</div>', unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
